@@ -1,18 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchTrendingToday } from "../../services/api";
 
-const MovieList = () => {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    const getMovies = async () => {
-      const data = await fetchTrendingToday();
-      setMovies(data);
-    };
-    getMovies();
-  }, []);
-
+const MovieList = ({ movies }) => {
   return (
     <ul>
       {movies.map((movie) => (
