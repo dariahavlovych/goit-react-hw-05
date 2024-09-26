@@ -14,21 +14,21 @@ export const fetchTrendingToday = async () => {
 };
 
 export const fetchMovieByQuery = async (query) => {
-  const { results } = await axios.get(`search/movie?query=${query}`, options);
-  return results;
+  const { data } = await axios.get(`search/movie?query=${query}`, options);
+  return data.results;
 };
 
 export const fetchMovieById = async (movie_id) => {
-  const data = await axios.get(`movie/${movie_id}`, options);
+  const { data } = await axios.get(`movie/${movie_id}`, options);
   return data;
 };
 
 export const fetchCastByMovieId = async (movie_id) => {
-  const data = await axios.get(`movie/${movie_id}/credits`, options);
+  const { data } = await axios.get(`movie/${movie_id}/credits`, options);
   return data.cast;
 };
 
 export const fetchReviewsByMovieId = async (movie_id) => {
-  const data = await axios.get(`movie/${movie_id}/reviews`, options);
+  const { data } = await axios.get(`movie/${movie_id}/reviews`, options);
   return data.results;
 };
