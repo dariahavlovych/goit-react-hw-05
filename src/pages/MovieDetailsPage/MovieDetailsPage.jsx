@@ -22,7 +22,6 @@ const MovieDetailsPage = () => {
   return (
     <div>
       <div>
-        {" "}
         <img src={basicImgUrl + movieDetails.poster_path} alt="" />
         <div>
           <h3>{movieDetails.original_title}</h3>
