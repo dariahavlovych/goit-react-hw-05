@@ -1,28 +1,24 @@
+import { Field, Form, Formik } from "formik";
 import { IoSearchOutline } from "react-icons/io5";
 
 const SearchForm = ({ onSubmit }) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const query = e.target.elements.search.value;
-    if (!query) {
-      return alert("Please enter your search query");
-    }
-    onSubmit(query);
+  const initialValues = {
+    query: "",
+  };
+
+  const handleSubmit = (values) => {
+    onSubmit(values.query);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        name="search"
-        type="text"
-        autoComplete="off"
-        autoFocus
-        placeholder="Search images and photos"
-      />
-      <button type="submit">
-        <IoSearchOutline />
-      </button>
-    </form>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
+        <Field name="query" placeholder="Search images and photos" />
+        <button type="submit">
+          <IoSearchOutline />
+        </button>
+      </Form>
+    </Formik>
   );
 };
 

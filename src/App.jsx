@@ -16,7 +16,7 @@ const MovieReviews = lazy(() =>
 // TODO
 // 3. add styles
 // 4.Load more??
-//change form to formic
+//refactoring via own hook
 
 function App() {
   return (
