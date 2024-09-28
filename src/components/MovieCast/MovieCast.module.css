@@ -1,0 +1,14 @@
+.list {
+  padding: 18px;
+}
+.item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.imgWrap {
+  border: 1px solid grey;
+  border-radius: 6px;
+  overflow: hidden;
+}

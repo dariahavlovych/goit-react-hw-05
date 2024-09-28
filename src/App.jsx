@@ -13,11 +13,6 @@ const MovieReviews = lazy(() =>
   import("./components/MovieReviews/MovieReviews")
 );
 
-// TODO
-// 3. add styles
-// 4.Load more??
-//refactoring via own hook
-
 function App() {
   return (
     <>

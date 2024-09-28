@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import s from "./MovieCast.module.css";
 import { fetchCastByMovieId } from "../../services/api";
 import Loader from "../Loader/Loader";
 
@@ -9,14 +10,16 @@ const MovieCast = () => {
     "https://dummyimage.com/400x600/cdcdcd/000.jpg&text=No+poster";
   const [cast, setCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResultEmpty, setIsResultEmpty] = useState(false);
 
   useEffect(() => {
     const getCast = async () => {
       try {
+        setIsResultEmpty(false);
         setIsLoading(true);
         const data = await fetchCastByMovieId(movieId);
         if (data.length === 0) {
-          return <h3>Nothing to show</h3>;
+          setIsResultEmpty(true);
         }
         setCast(data);
       } catch (error) {
@@ -31,20 +34,27 @@ const MovieCast = () => {
   return (
     <div>
       {isLoading && <Loader />}
-      <ul>
+      {isResultEmpty && <h3>Sorry, cast info is not available</h3>}
+      <ul className={s.list}>
         {cast.map((actor) => (
-          <li key={actor.cast_id}>
-            <img
-              src={
-                actor.profile_path
-                  ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                  : defaultImg
-              }
-              width={250}
-              alt="poster"
-            />
-            <p>{actor.name}</p>
-            <p>{actor.character}</p>
+          <li className={s.item} key={actor.cast_id}>
+            <div className={s.imgWrap}>
+              {" "}
+              <img
+                src={
+                  actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+                    : defaultImg
+                }
+                width={200}
+                alt="poster"
+              />
+            </div>
+
+            <div>
+              <p>{actor.name}</p>
+              <p>Character: {actor.character}</p>
+            </div>
           </li>
         ))}
       </ul>

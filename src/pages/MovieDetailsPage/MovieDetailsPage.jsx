@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import s from "./MovieDetailsPage.module.css";
 import { fetchMovieById } from "../../services/api";
 import Loader from "../../components/Loader/Loader";
 
@@ -15,9 +16,6 @@ const MovieDetailsPage = () => {
     const getMovieDetails = async () => {
       try {
         const data = await fetchMovieById(movieId);
-        if (Object.keys(data).length === 0) {
-          return <h3>Nothing to show</h3>;
-        }
         setMovieDetails(data);
       } catch (error) {
         return alert("Something went wrong. Please try again");
@@ -31,9 +29,11 @@ const MovieDetailsPage = () => {
   }
 
   return (
-    <div>
-      <Link to={goBackLink.current}>Go Back</Link>
-      <div>
+    <div className={s.wrapper}>
+      <Link to={goBackLink.current} className={s.link}>
+        Go Back
+      </Link>
+      <div className={s.movieCard}>
         <img
           src={
             movieDetails.poster_path
@@ -47,9 +47,9 @@ const MovieDetailsPage = () => {
         <div>
           <h3>{movieDetails.original_title}</h3>
           <p>User Score: {Math.ceil(movieDetails.vote_average * 10)}%</p>
-          <p>Owerview</p>
+          <p className={s.subTitle}>Owerview:</p>
           <p>{movieDetails.overview}</p>
-          <p>Genres</p>
+          <p className={s.subTitle}>Genres:</p>
           <div>
             {movieDetails.genres.map((genre) => (
               <p key={genre.id}>{genre.name}</p>
@@ -58,13 +58,17 @@ const MovieDetailsPage = () => {
         </div>
       </div>
       <hr />
-      <p>Additional information</p>
+      <p className={s.subTitle}>Additional information</p>
       <ul>
         <li>
-          <Link to="cast">Cast</Link>
+          <Link to="cast" className={s.subLink}>
+            Cast
+          </Link>
         </li>
         <li>
-          <Link to="reviews">Reviews</Link>
+          <Link to="reviews" className={s.subLink}>
+            Reviews
+          </Link>
         </li>
       </ul>
 

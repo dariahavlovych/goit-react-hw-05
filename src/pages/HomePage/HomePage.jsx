@@ -7,14 +7,16 @@ import Loader from "../../components/Loader/Loader";
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResultEmpty, setIsResultEmpty] = useState(false);
 
   useEffect(() => {
     const getMovies = async () => {
       try {
+        setIsResultEmpty(false);
         setIsLoading(true);
         const data = await fetchTrendingToday();
         if (data.length === 0) {
-          return <h3>Nothing to show</h3>;
+          setIsResultEmpty(true);
         }
         setMovies(data);
       } catch (error) {
@@ -30,6 +32,7 @@ const HomePage = () => {
     <div>
       <h2 className={s.title}>Trending Today</h2>
       {isLoading && <Loader />}
+      {isResultEmpty && <h3>No trends for today</h3>}
       <MovieList movies={movies} />
     </div>
   );

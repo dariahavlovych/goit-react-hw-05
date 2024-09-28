@@ -11,11 +11,7 @@ const MoviesPage = () => {
   const query = searchParams.get("query") ?? "";
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const setSearchQuery = (value) => {
-    searchParams.set("query", value);
-    setSearchParams(searchParams);
-  };
+  const [isResultEmpty, setIsResultEmpty] = useState(false);
 
   useEffect(() => {
     if (!query) {
@@ -23,10 +19,11 @@ const MoviesPage = () => {
     }
     const getMovies = async () => {
       try {
+        setIsResultEmpty(false);
         setIsLoading(true);
         const data = await fetchMovieByQuery(query);
         if (data.length === 0) {
-          return alert("Nothing to show");
+          setIsResultEmpty(true);
         }
         setMovies(data);
       } catch (error) {
@@ -38,11 +35,23 @@ const MoviesPage = () => {
     getMovies();
   }, [query]);
 
+  const setSearchQuery = (value) => {
+    if (!value) {
+      return;
+    }
+    searchParams.set("query", value);
+    setSearchParams(searchParams);
+  };
+
   return (
-    <div>
+    <div className={s.wrapper}>
       <SearchForm onSubmit={setSearchQuery} />
-      <hr />
       {isLoading && <Loader />}
+      {isResultEmpty && (
+        <h3 className={s.notify}>
+          There are no results by your query. Please try another one
+        </h3>
+      )}
       <MovieList movies={movies} />
     </div>
   );

@@ -1,0 +1,15 @@
+.list {
+  padding: 18px;
+}
+.item {
+  margin-bottom: 8px;
+}
+
+.link {
+  color: black;
+  transition: color 300ms ease;
+}
+
+.link:hover {
+  color: blue;
+}

@@ -1,0 +1,25 @@
+.header {
+  height: 60px;
+  background-color: #c6f1fb;
+  border-bottom: 1px solid grey;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.link {
+  color: black;
+  text-decoration: none;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
+.active {
+  text-decoration: underline;
+  color: blue;
+}

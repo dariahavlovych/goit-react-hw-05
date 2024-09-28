@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from "formik";
+import s from "./SearchForm.module.css";
 import { IoSearchOutline } from "react-icons/io5";
 
 const SearchForm = ({ onSubmit }) => {
@@ -12,12 +13,18 @@ const SearchForm = ({ onSubmit }) => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form>
-        <Field name="query" placeholder="Search images and photos" />
-        <button type="submit">
-          <IoSearchOutline />
-        </button>
-      </Form>
+      <div className={s.formWrapper}>
+        <Form className={s.form}>
+          <Field
+            name="query"
+            placeholder="Search images and photos"
+            className={s.input}
+          />
+          <button type="submit" className={s.btn}>
+            <IoSearchOutline className={s.icon} />
+          </button>
+        </Form>
+      </div>
     </Formik>
   );
 };
