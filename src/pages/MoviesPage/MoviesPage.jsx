@@ -12,6 +12,7 @@ const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isResultEmpty, setIsResultEmpty] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (!query) {
@@ -20,14 +21,15 @@ const MoviesPage = () => {
     const getMovies = async () => {
       try {
         setIsResultEmpty(false);
+        setError(false);
         setIsLoading(true);
         const data = await fetchMovieByQuery(query);
         if (data.length === 0) {
           setIsResultEmpty(true);
         }
         setMovies(data);
-      } catch (error) {
-        return alert("Something went wrong. Please try again");
+      } catch {
+        setError(true);
       } finally {
         setIsLoading(false);
       }
@@ -47,6 +49,7 @@ const MoviesPage = () => {
     <div className={s.wrapper}>
       <SearchForm onSubmit={setSearchQuery} />
       {isLoading && <Loader />}
+      {error && <h3>Something went wrong. Please try again</h3>}
       {isResultEmpty && (
         <h3 className={s.notify}>
           There are no results by your query. Please try another one

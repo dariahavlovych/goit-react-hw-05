@@ -11,19 +11,21 @@ const MovieCast = () => {
   const [cast, setCast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isResultEmpty, setIsResultEmpty] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getCast = async () => {
       try {
         setIsResultEmpty(false);
+        setError(false);
         setIsLoading(true);
         const data = await fetchCastByMovieId(movieId);
         if (data.length === 0) {
           setIsResultEmpty(true);
         }
         setCast(data);
-      } catch (error) {
-        return alert("Something went wrong. Please try again");
+      } catch {
+        setError(true);
       } finally {
         setIsLoading(false);
       }
@@ -35,6 +37,7 @@ const MovieCast = () => {
     <div>
       {isLoading && <Loader />}
       {isResultEmpty && <h3>Sorry, cast info is not available</h3>}
+      {error && <h3>Something went wrong. Please try again</h3>}
       <ul className={s.list}>
         {cast.map((actor) => (
           <li className={s.item} key={actor.cast_id}>

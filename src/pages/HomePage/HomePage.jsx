@@ -8,19 +8,21 @@ const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isResultEmpty, setIsResultEmpty] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getMovies = async () => {
       try {
         setIsResultEmpty(false);
+        setError(false);
         setIsLoading(true);
         const data = await fetchTrendingToday();
         if (data.length === 0) {
           setIsResultEmpty(true);
         }
         setMovies(data);
-      } catch (error) {
-        return alert("Something went wrong. Please try again");
+      } catch {
+        setError(true);
       } finally {
         setIsLoading(false);
       }
@@ -33,6 +35,7 @@ const HomePage = () => {
       <h2 className={s.title}>Trending Today</h2>
       {isLoading && <Loader />}
       {isResultEmpty && <h3>No trends for today</h3>}
+      {error && <h3>Something went wrong. Please try again</h3>}
       <MovieList movies={movies} />
     </div>
   );
